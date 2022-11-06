@@ -1,0 +1,156 @@
+\documentclass[11pt, a5paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english, bulgarian]{babel}
+\usepackage{amssymb}
+\usepackage{hyperref, fancyhdr, lastpage, fancyvrb, tcolorbox, titlesec}
+\usepackage{array, tabularx, colortbl}
+\usepackage{tikz}
+\usepackage{venndiagram}
+\usepackage{amsthm}
+\usepackage{amsmath,physics}
+\usepackage{mathtools}
+\usepackage[a5paper, left=0.50in, right=0.50in, top=1.0in, bottom=1.0in]{geometry}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\opair}{m}
+ {
+  \langle\mspace{2mu}
+  \clist_set:Nn \l_tmpa_clist { #1 }
+  \clist_use:Nn \l_tmpa_clist {,\mspace{3mu plus 1mu minus 1mu}\allowbreak}
+  \mspace{2mu}\rangle
+}
+\ExplSyntaxOff
+
+\hypersetup{
+    colorlinks=true,
+    linktoc=all,
+    linkcolor=blue
+}
+
+\newtheorem{definition}{Дефиниция}[section]
+\newtheorem{theorem}[definition]{Теорема}
+\newtheorem{claim}[definition]{Твърдение}
+\newtheorem{axiom}[definition]{Аксиома}
+\newtheorem{lemma}[definition]{Лема}
+\newtheorem{corollary}[definition]{Следствие}
+\theoremstyle{remark}
+\newtheorem*{remark}{Забележка}
+
+\pagestyle{fancy}
+
+\lhead{\leftmark}
+\rhead{}
+
+\setlength\parindent{0pt}
+
+\title{Скелет на документ}
+\author{Тодор Дуков}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\chapter{Примерна глава}
+\section{Примерна секция}
+
+Нека като за начало да дадем една аксиома.
+
+\begin{axiom}[Логическа аксиома]
+    Съществува множество т.е.
+
+    \centerline{$( \exists x ) ( x = x)$}
+\end{axiom}
+
+Сега нека дадем и една дефиниция.
+
+\begin{definition}[Наредена двойка]
+    Ако x и y са множества, то наредена двойка на x и y ще наричаме множеството $\{\{x\}, \{x, y\}\}$ и ще го бележим с $\opair{x, y}$.
+\end{definition}
+
+\begin{claim}
+    $( \forall n \in \mathbb{N} ) ( \displaystyle\sum_{i=1}^{n}i = \frac{n(n+1)}{2} )$
+\end{claim}
+
+\begin{proof}
+    Ще докажем твърдението с индукция по $n \in \mathbb{N}$.
+
+    База: При $n = 0$ се получава, че $0 = \frac{0(0+1)}{2}$ \checkmark
+
+    ИС: $\displaystyle\sum_{i=1}^{n+1}i = \displaystyle\sum_{i=1}^{n}i + (n + 1) \overset{\text{ИП}}{=} \frac{n(n+1)}{2} + (n + 1) = \frac{n(n+1) + 2(n+1)}{2} = \frac{(n+1)(n+2)}{2}$
+\end{proof}
+
+\begin{lemma}[за покачването]
+    Езикът е $L$ регулярен.
+    Тогава $(\exists p \in \mathbb{N} \: \forall \alpha \in \Sigma^* \: \exists x, y, z \in \Sigma^*, xyz = \alpha, |xy| \leq p, |y| \geq 1 \: \forall i \in \mathbb{N}) (xy^iz \in L)$.
+\end{lemma}
+
+\begin{proof}
+    Езикът $L$ е регулярен.
+
+    Следователно съществува ДКА
+    $\mathcal{A} = \opair{Q, \Sigma, s, \delta, F}$,
+    такъв че $\mathcal{L}(\mathcal{A}) = L$.
+
+    Нека $p = |Q|$ и нека $q_1, \dots, q_p$ са състоянията от $Q$.
+    Нека $\alpha \in L$ е такава, че $|\alpha| = n$, където $n \geq p$.
+
+    Ще разбием $\alpha$ на $\alpha_1, \dots, \alpha_n \in \Sigma$ (т.е. $\alpha = \alpha_1\dots\alpha_n$).
+    Знаем, че съществуват $q_{i_0} = s, \dots, q_{i_n} \in Q$, такива че
+    $(\forall j \in \{1, \dots, n\}) (\delta(q_{i_{j-1}}, \alpha_j) = q_{i_j})$.
+
+    Нека разгледаме думата $\alpha_1 \dots \alpha_p$.
+    За нея знаем, че по време на четенето на думата
+    автоматът минава през $p + 1$ състояния.
+    Следователно по принципът на Дирихле съществуват
+    $t_1, t_2 \in \{1, \dots, p\}$, където $t_1 < t_2$,
+    такива че $q_{i_{t_1}} = q_{i_{t_2}}$.
+
+    Нека
+    $x = \alpha_1 \dots \alpha_{t_1}$,
+    $y = \alpha_{t_1 + 1} \dots \alpha_{t_2}$,
+    $z = \alpha_{t_2 + 1} \dots \alpha_n$.
+    Сигурни сме, че $|xy| \leq p$, защото $t_2 \leq p$ и че $|y| \geq 1$ понеже $t_1 \neq t_2$.
+    Знаем, че $\delta^*(q_{i_{t_1}}, y) = q_{i_{t_2}}$.
+
+    \begin{claim}
+        $(\forall i \in \mathbb{N}) (\delta^*(q_{i_{t_1}}, y^i) = q_{i_{t_2}})$.
+    \end{claim}
+
+    \begin{proof}
+        Ще докажем твърдението с индукция по $i \in \mathbb{N}$.
+
+        База: $\delta^*(q_{i_{t_1}}, \epsilon) = q_{i_{t_1}} = q_{i_{t_2}}$ \checkmark
+
+        ИС: $\delta^*(q_{i_{t_1}}, y^{i+1}) \overset{\text{Деф}}{=} \delta(\delta^*(q_{i_{t_1}}, y^i), y) \overset{\text{ИП}}{=} \delta(q_{i_{t_2}}, y) = \delta(q_{i_{t_1}}, y) = q_{i_{t_2}}$
+    \end{proof}
+
+    Знаем, че $\alpha = xyz \in L$.
+    Тъй като $xyz = \alpha$, имаме че $\delta^*(s, xyz) \in F$.
+    От тук следва, че $\delta^*(\delta^*(s, xy), z) \in F$,
+    следователно $\delta^*(\delta^*(\delta^*(s, x), y), z) \in F$.
+    $\delta^*(s, x) = q_{i_{t_1}} \Rightarrow \delta^*(\delta^*(q_{i_{t_1}}, y), z) \in F$.
+    От доказаното твърдение имаме, че $(\forall i \in \mathbb{N}) (\delta^*(q_{i_{t_1}}, y^i) = q_{i_{t_2}} = q_{i_{t_1}})$.
+    Освен това знаем, че $\delta^*(q_{i_{t_2}}, z) \in F$.
+    Следователно
+    $(\forall i \in \mathbb{N}) (\delta^*(\delta^*(q_{i_{t_1}}, y^i), z) \in F)$.
+    От тук можем да заключим, че
+    $(\forall i \in \mathbb{N}) (\delta^*(\delta^*(\delta^*(s, x), y^i), z) \in F)$
+    и вървейки в обратната посока (обединяването на всички $\delta^*$) получаваме, че
+    $(\forall i \in \mathbb{N}) (\delta^*(s, xy^iz) \in F)$,
+    с което доказахме лемата.
+
+\end{proof}
+
+\begin{remark}[Примерна забележка]
+    $( \forall x ) (\varnothing \subseteq x)$
+\end{remark}
+
+\chapter{Друга примерна глава}
+
+\section{Примерна секция}
+Това е просто случаен текст, който си губиш времето да четеш.
+\section{Друга примерна секция}
+Това е просто случаен текст, който си губиш времето да четеш.
+\end{document}
