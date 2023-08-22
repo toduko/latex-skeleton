@@ -8,10 +8,30 @@
 \usepackage{array, tabularx, colortbl}
 \usepackage{tikz}
 \usepackage{venndiagram}
-\usepackage{amsthm}
+\usepackage{amsthm, bm}
+\usepackage{relsize}
 \usepackage{amsmath,physics}
 \usepackage{mathtools}
+\usepackage{subcaption}
+\usepackage{theoremref}
+\usepackage{circuitikz}
 \usepackage[a5paper, left=0.50in, right=0.50in, top=1.0in, bottom=1.0in]{geometry}
+\usepackage{minted}
+\usepackage{stmaryrd}
+% \usepackage[Rejne]{fncychap}
+\usepackage{forest}
+\usetikzlibrary{automata, arrows, positioning, shapes}
+\useforestlibrary{linguistics}
+
+\newcommand{\db}[1]{\llbracket #1 \rrbracket}
+\newcommand{\regexlang}[1]{\mathcal{L}\db{#1}}
+\newcommand{\tri}[1]{\stackrel{#1}{\vartriangleleft}}
+\newcommand{\rt}[1]{\operatorname{root}(#1)}
+\newcommand{\h}[1]{\operatorname{height}(#1)}
+\newcommand{\chld}[1]{\operatorname{children}(#1)}
+\newcommand{\lv}[1]{\operatorname{leaves}(#1)}
+\newcommand{\w}[1]{\operatorname{word}(#1)}
+\newcommand{\wraphspace}[2]{\hspace*{#2}#1\hspace*{#2}}
 
 \ExplSyntaxOn
 \NewDocumentCommand{\opair}{m}
@@ -29,15 +49,19 @@
     linkcolor=blue
 }
 
+\theoremstyle{definition}
 \newtheorem{definition}{Дефиниция}[section]
+\newtheorem*{warning}{\textcolor{red}{Внимание}}
+\theoremstyle{plain}
 \newtheorem{theorem}[definition]{Теорема}
 \newtheorem{claim}[definition]{Твърдение}
 \newtheorem{axiom}[definition]{Аксиома}
 \newtheorem{lemma}[definition]{Лема}
+\newtheorem{problem}[definition]{Задача}
 \newtheorem{corollary}[definition]{Следствие}
 \theoremstyle{remark}
 \newtheorem*{remark}{Забележка}
-
+\theoremstyle{definition}
 \pagestyle{fancy}
 
 \lhead{\leftmark}
@@ -57,10 +81,10 @@
 
 Нека като за начало да дадем една аксиома.
 
-\begin{axiom}[Логическа аксиома]
-    Съществува множество т.е.
+\begin{axiom}[Аксиома за обема]
+    Две множества са равни т.с.т.к. съдържат едни и същи елементи т.е.
 
-    \centerline{$( \exists x ) ( x = x)$}
+    \centerline{$(\forall x) (\forall y) [x = y \leftrightarrow (\forall z)(z \in x \leftrightarrow z \in y)]$}
 \end{axiom}
 
 Сега нека дадем и една дефиниция.
