@@ -1,4 +1,4 @@
-\documentclass[11pt, a5paper]{report}
+\documentclass[a5paper]{report}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T2A]{fontenc}
@@ -127,14 +127,16 @@
     Нека разгледаме думата $\alpha_1 \dots \alpha_p$.
     За нея знаем, че по време на четенето на думата
     автоматът минава през $p + 1$ състояния.
-    Следователно по принципът на Дирихле съществуват
-    $t_1, t_2 \in \{1, \dots, p\}$, където $t_1 < t_2$,
-    такива че $q_{i_{t_1}} = q_{i_{t_2}}$.
+
+    Следователно по принципа на Дирихле съществуват $t_1, t_2 \in \{1, \dots, p\}$,
+    където $t_1 < t_2$ са такива,
+    че $q_{i_{t_1}} = q_{i_{t_2}}$.
 
     Нека
     $x = \alpha_1 \dots \alpha_{t_1}$,
     $y = \alpha_{t_1 + 1} \dots \alpha_{t_2}$,
     $z = \alpha_{t_2 + 1} \dots \alpha_n$.
+    
     Сигурни сме, че $|xy| \leq p$, защото $t_2 \leq p$ и че $|y| \geq 1$ понеже $t_1 \neq t_2$.
     Знаем, че $\delta^*(q_{i_{t_1}}, y) = q_{i_{t_2}}$.
 
