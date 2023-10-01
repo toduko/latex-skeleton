@@ -32,11 +32,11 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: skeleton.tex
+          root_file: main.tex
           latexmk_shell_escape: true
 
       - name: Rename file
-        run: mv skeleton.pdf ${{ github.event.repository.name }}.pdf
+        run: mv main.pdf ${{ github.event.repository.name }}.pdf
 
       - name: Deploy PDF
         uses: dmnemec/copy_file_to_another_repo_action@main
